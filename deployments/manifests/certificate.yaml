@@ -2,7 +2,7 @@ apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
   name: letsencrypt-prod
-  namespace: cncamp
+  namespace: istio-system
 spec:
   acme:
     email: ryan.sun@livermap.com
@@ -12,14 +12,14 @@ spec:
     solvers:
       - http01:
           ingress:
-            class: nginx
+            class: istio
 
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: cncamp-tls
-  namespace: cncamp
+  namespace: istio-system
 spec:
   issuerRef:
     name: letsencrypt-prod

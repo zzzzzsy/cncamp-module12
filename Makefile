@@ -42,7 +42,7 @@ apply: pre-apply ## apply to target k8s cluster
 # to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using
 # the Prometheus Operator.
 install-prom: pre-apply
-	helm install prometheus -f kube-prometheus-stack/values.yaml --namespace monitoring prometheus-community/kube-prometheus-stack
+	helm install prometheus -f deployments/kube-prometheus-stack/values.yaml --namespace monitoring prometheus-community/kube-prometheus-stack
 
 cleanup:
 	kubectl delete ns cncamp

@@ -12,10 +12,12 @@ func Ping(c *gin.Context) {
 
 func Hello(c *gin.Context) {
 	pkg.RandomSleep()
+	setResponseHeader(c)
 	responseOk(c, gin.H{"message": "Hello LiveRamp SRE"})
 }
 
 func GetIp(c *gin.Context) {
 	pkg.RandomSleep()
+	setResponseHeader(c)
 	responseOk(c, gin.H{"message": pkg.GetIP(c.Request)})
 }

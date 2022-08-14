@@ -12,17 +12,3 @@ spec:
     - name: http-client
       port: 80
       targetPort: http-app
-# ---
-# apiVersion: monitoring.coreos.com/v1
-# kind: ServiceMonitor
-# metadata:
-#   name: httpclient-service
-#   namespace: cncamp
-#   labels:
-#     app: httpclient
-# spec:
-#   selector:
-#     matchLabels:
-#       app: httpclient
-#   endpoints:
-#     - port: http-app

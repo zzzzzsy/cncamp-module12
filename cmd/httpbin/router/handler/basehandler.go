@@ -1,7 +1,10 @@
 package handler
 
 import (
+	"os"
+
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 )
 
 func responseOk(c *gin.Context, data interface{}) {
@@ -25,27 +28,16 @@ func responseError(c *gin.Context, err error) {
 	c.JSON(200, result)
 }
 
-// func defaultHandler(rw http.ResponseWriter, r *http.Request, msg string) {
-// 	setResponseHeader(rw, r)
-// 	rw.WriteHeader(http.StatusOK)
-// 	rw.Write([]byte(msg))
-// 	logs := HttpServerLog{
-// 		Request:    *r,
-// 		StatusCode: http.StatusOK,
-// 	}
-// 	httpServerLog(logs)
-// }
+func setResponseHeader(c *gin.Context) {
+	if v, exist := os.LookupEnv("VERSION"); exist {
+		c.Writer.Header().Set("User-Version", v)
+	} else {
+		log.Infof("The env variable %s does not exist\n", v)
+	}
 
-// func setResponseHeader(rw http.ResponseWriter, r *http.Request) {
-// 	if v, exist := os.LookupEnv("VERSION"); exist {
-// 		rw.Header().Add("User-Version", v)
-// 	} else {
-// 		log.Infof("The env variable %s does not exist\n", v)
-// 	}
-
-// 	for name, values := range r.Header {
-// 		for _, value := range values {
-// 			rw.Header().Set(name, value)
-// 		}
-// 	}
-// }
+	for name, values := range c.Request.Header {
+		for _, value := range values {
+			c.Writer.Header().Set(name, value)
+		}
+	}
+}
